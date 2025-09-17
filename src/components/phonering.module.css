@@ -1,0 +1,44 @@
+/* Phone.module.css */
+
+/* Base Styling */
+.phone {
+  float: right;
+  height: 32px;
+  line-height: 32px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+  margin: 33px 0 33px 50px;
+}
+
+.phone svg {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-top: 6px;
+  margin-right: 10px;
+}
+
+.phone svg path {
+  fill: #f03454;
+}
+
+/* If your SVG keeps the same path order, this is fine: */
+.phone svg path:nth-child(2) {
+  animation: headerPhone 1s infinite cubic-bezier(.1,.57,.5,1);
+}
+.phone svg path:nth-child(3) {
+  animation: headerPhone2 1s infinite cubic-bezier(.1,.57,.5,1);
+}
+
+/* Animate phone */
+@keyframes headerPhone {
+  0%, 30%   { opacity: 0; transform: translate3d(-20px, 20px, 0); }
+  80%       { opacity: 1; transform: translate3d(0, 0, 0); }
+  100%      { opacity: 0; }
+}
+@keyframes headerPhone2 {
+  0%        { opacity: 0; transform: translate3d(-20px, 20px, 0); }
+  70%, 90%  { opacity: 1; transform: translate3d(0, 0, 0); }
+  100%      { opacity: 0; }
+}

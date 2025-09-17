@@ -1,0 +1,91 @@
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;       /* remove if you don't want full-height centering */
+  background: #000;
+}
+
+/* List + items (all local) */
+.list {
+  position: relative;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+.item {
+  position: relative;
+  list-style: none;
+  margin: 0 20px;
+  cursor: pointer;
+}
+.link {
+  position: relative;
+  display: block;
+  text-decoration: none;
+}
+
+/* Style the FA icon that you render inside the link.
+   .fa-brands is global → wrap with :global(...) so the module can see it. */
+.link :global(.fa-brands) {
+  font-size: 6em;
+  color: #222;
+}
+
+/* Hover overlay icon (the animated colored “reveal”) */
+.link::before {
+  /* IMPORTANT: use the font family that matches your FA version:
+     v4: "FontAwesome", v5: "Font Awesome 5 Brands", v6: "Font Awesome 6 Brands" */
+  font-family: "FontAwesome";
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 6em;
+  height: 0;                 /* collapsed until hover */
+  overflow: hidden;
+  transition: 0.5s ease-in-out;
+  content: "";               /* set per-item below */
+}
+
+/* 1) Instagram (gradient text) */
+.item:nth-child(1) .link::before {
+  content: "\f16d";
+  background-image: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;                   /* FF */
+  -webkit-text-fill-color: transparent; /* WebKit */
+  border-bottom: 4px solid #dc2743;
+}
+
+/* 2) WhatsApp (solid color) */
+.item:nth-child(2) .link::before {
+  content: "\f232";
+  background-image: none;
+  color: #25d366;
+  -webkit-text-fill-color: currentColor;
+  border-bottom: 4px solid #25d366;
+}
+
+/* 3) Twitter/X (solid color) */
+.item:nth-child(3) .link::before {
+  content: "\f099";
+  background-image: none;
+  color: #1da1f2;
+  -webkit-text-fill-color: currentColor;
+  border-bottom: 4px solid #1da1f2;
+}
+
+/* Reveal animation */
+.item:hover .link::before {
+  height: 100%;
+}

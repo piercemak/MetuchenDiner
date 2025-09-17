@@ -1,0 +1,138 @@
+const reviewsData = [
+  {
+    id: "2025-06-22-sam",
+    name: "sam",
+    rating: 5,
+    date: "2025-06-22",
+    source: "Grubhub",
+    text:
+      "Fast order turnaround. Fresh food, hot food is hot, cold food is cold, and the portions are big.",
+  },
+  {
+    id: "2025-05-16-mary",
+    name: "Mary",
+    rating: 5,
+    date: "2025-05-16",
+    source: "Grubhub",
+    text:
+      "Tasty burger & fries, huge portions. Great value. Even the coleslaw was good! Will takeout again!",
+  },
+  {
+    id: "2025-05-04-brad",
+    name: "Brad",
+    rating: 5,
+    date: "2025-05-04",
+    source: "Grubhub",
+    text: "Always a fan of the metuchen diner",
+  },
+  {
+    id: "2025-03-23-arlene",
+    name: "Arlene",
+    rating: 4,
+    date: "2025-03-23",
+    source: "Grubhub",
+    text: "Average taste, large serving",
+  },
+  {
+    id: "2025-03-16-jeri-1",
+    name: "Jeri",
+    rating: 4,
+    date: "2025-03-16",
+    source: "Grubhub",
+    text: "Good local place",
+  },
+  {
+    id: "2025-03-16-joan",
+    name: "Joan",
+    rating: 5,
+    date: "2025-03-16",
+    source: "Grubhub",
+    text: "I love the food",
+  },
+  {
+    id: "2025-02-17-matt",
+    name: "Matt",
+    rating: 5,
+    date: "2025-02-17",
+    source: "Grubhub",
+    text: "It's the best",
+  },
+  {
+    id: "2025-02-05-jeri-2",
+    name: "Jeri",
+    rating: 4,
+    date: "2025-02-05",
+    source: "Grubhub",
+    text: "Good local place",
+  },
+
+  {
+    id: "2024-12-27-sam",
+    name: "sam",
+    rating: 5,
+    date: "2024-12-27",
+    source: "Grubhub",
+    text: "Fresh, hot entrees. Large portions. Robust PO packaging.",
+  },
+  {
+    id: "2024-12-26-jeri-3",
+    name: "Jeri",
+    rating: 4,
+    date: "2024-12-26",
+    source: "Grubhub",
+    text: "Good family place",
+  },
+  {
+    id: "2024-12-04-sam",
+    name: "sam",
+    rating: 5,
+    date: "2024-12-04",
+    source: "Grubhub",
+    text:
+      "Generous portions. Delivered food was steaming hot, just like when dining in.",
+  },
+  {
+    id: "2024-10-20-linda",
+    name: "Linda",
+    rating: 5,
+    date: "2024-10-20",
+    source: "Grubhub",
+    text:
+      "1st time ordering/visiting. The ordering process & food was great! Thank u!",
+  },
+  {
+    id: "2024-04-15-raymond",
+    name: "Raymond",
+    rating: 5,
+    date: "2024-04-15",
+    source: "Grubhub",
+    text:
+      "Order always correct always hot or minimum warm always seems short on drivers. Food always finished before driver picks up",
+  },
+  {
+    id: "2023-11-19-christopher",
+    name: "Christopher",
+    rating: 5,
+    date: "2023-11-19",
+    source: "Grubhub",
+    text: "Excellent as always!!",
+  },
+  {
+    id: "2023-09-14-darryl",
+    name: "Darryl",
+    rating: 5,
+    date: "2023-09-14",
+    source: "Grubhub",
+    text: "51 years of eating there",
+  },
+  {
+    id: "2023-04-02-sharon",
+    name: "Sharon",
+    rating: 5,
+    date: "2023-04-02",
+    source: "Grubhub",
+    text: "I love their food!",
+  },
+];
+
+export default reviewsData;
