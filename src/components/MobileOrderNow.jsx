@@ -37,7 +37,7 @@ const sectionVariants = {
 
   return (
     <div className='w-dvw h-dvh bg-white'>
-        <div className='flex flex-col items-center pt-24'>
+        <div className='flex flex-col items-center pt-24 pb-[calc(env(safe-area-inset-bottom)+120px)]'>
             <motion.div 
                 variants={containerVariants}
                 initial="hidden"
