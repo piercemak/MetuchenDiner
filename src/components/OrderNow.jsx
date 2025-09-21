@@ -111,7 +111,6 @@ const sectionVariants = {
             </div>
             <div className="absolute w-[60%] bottom-2 left-2 flex flex-row justify-between items-center outfit-font text-black/60 text-[14px] 2xl:text-[18px]">
                 <span>© 2025 Metuchen Diner • All rights reserved • Site by Piercemakombe.com</span>
-                <div className="absolute bg-red-900/90 w-80 h-[1%]"></div>
                 <motion.span
                     className="cursor-pointer 2xl:left-[250px] 2xl:relative"
                     whileHover={{ scale: 1.1, color: "#8a0194" }}
