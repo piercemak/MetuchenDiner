@@ -24,38 +24,87 @@ export default function AdminMenu() {
 // at the top of AdminMenu
 const [authReady, setAuthReady] = React.useState(false);
 
+// handle invite / verification / magic-link callbacks
 React.useEffect(() => {
+  let mounted = true;
+
   (async () => {
     try {
       const url = new URL(window.location.href);
 
-      // Case 1: links that use `?code=...` (GoTrue v2)
+      // Format A (GoTrue v2 / PKCE):  ?code=XYZ
       const code = url.searchParams.get("code");
       if (code) {
         await supabase.auth.exchangeCodeForSession(code);
       }
 
-      // Case 2: links that use `?token_hash=...&type=invite|signup|recovery`
-      const tokenHash = url.searchParams.get("token_hash");
+      // Format B (email invite / recovery / magic): ?token_hash=...&type=invite|recovery|magiclink|signup
+      const token_hash = url.searchParams.get("token_hash");
       const type = url.searchParams.get("type");
-      if (tokenHash && type) {
-        await supabase.auth.verifyOtp({ token_hash: tokenHash, type });
+      if (token_hash && type) {
+        await supabase.auth.verifyOtp({ token_hash, type });
       }
 
-      // Get (or confirm) current session
+      // grab the session (if either path succeeded)
       const { data: { session } } = await supabase.auth.getSession();
-      setSession(session ?? null);
+      if (mounted) setSession(session ?? null);
 
-      // (optional) clean the URL
+      // optional: clean query params
       window.history.replaceState({}, document.title, url.origin + url.pathname);
+    } catch (e) {
+      console.error(e);
     } finally {
-      setAuthReady(true);
+      if (mounted) setAuthReady(true);
     }
   })();
 
   const { data: sub } = supabase.auth.onAuthStateChange((_evt, s) => setSession(s));
-  return () => sub.subscription.unsubscribe();
+  return () => { mounted = false; sub.subscription.unsubscribe(); };
 }, []);
+
+
+
+
+
+// Password reset UI state
+const [showReset, setShowReset] = React.useState(false);
+const [sending, setSending] = React.useState(false);
+const [newPassword, setNewPassword] = React.useState("");
+const [confirmPassword, setConfirmPassword] = React.useState("");
+const [resetting, setResetting] = React.useState(false);
+
+async function sendResetEmail() {
+  setError("");
+  if (!email) { setError("Enter the email first."); return; }
+  setSending(true);
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${window.location.origin}/admin`, // comes back to this page
+  });
+  setSending(false);
+  if (error) setError(error.message);
+  else alert("Reset link sent. Check the inbox for that email.");
+}
+
+async function setNewPassword(e) {
+  e.preventDefault();
+  setError("");
+  if (newPassword !== confirmPassword) {
+    setError("Passwords do not match.");
+    return;
+  }
+  setResetting(true);
+  const { error } = await supabase.auth.updateUser({ password: newPassword });
+  setResetting(false);
+  if (error) setError(error.message);
+  else {
+    // Done. You’re signed in with the updated password.
+    setShowReset(false);
+  }
+}
+
+
+
+
 
 // --- History for jsonText ---
 const MAX_HISTORY = 100;
@@ -121,11 +170,19 @@ React.useEffect(() => {
 
 
   // ---- AUTH ----
-  React.useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session ?? null));
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => setSession(s));
-    return () => sub.subscription.unsubscribe();
-  }, []);
+React.useEffect(() => {
+  supabase.auth.getSession().then(({ data }) => setSession(data.session ?? null));
+
+  const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
+    setSession(s);
+    if (event === "PASSWORD_RECOVERY") {
+      // Supabase opened your /admin with a recovery token
+      setShowReset(true);
+    }
+  });
+
+  return () => sub.subscription.unsubscribe();
+}, []);
 
   async function signIn(e) {
     e.preventDefault();
@@ -200,10 +257,32 @@ React.useEffect(() => {
     setSaving(false);
   }
 
-  if (!authReady) {
+if (showReset) {
   return (
     <div className="min-h-screen grid place-items-center bg-neutral-50 p-6">
-      <p className="text-sm text-neutral-600">Checking your link…</p>
+      <form onSubmit={setNewPassword} className="w-full max-w-sm bg-white rounded-xl shadow p-6 space-y-4">
+        <h1 className="text-xl font-semibold">Set a new password</h1>
+        {error && <p className="text-red-600 text-sm">{error}</p>}
+        <input
+          type="password"
+          className="w-full border rounded px-3 py-2"
+          placeholder="New password"
+          value={newPassword}
+          onChange={e => setNewPassword(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          className="w-full border rounded px-3 py-2"
+          placeholder="Confirm new password"
+          value={confirmPassword}
+          onChange={e => setConfirmPassword(e.target.value)}
+          required
+        />
+        <button className="w-full bg-red-900 text-white rounded px-3 py-2 hover:bg-red-800" disabled={resetting}>
+          {resetting ? "Updating…" : "Update password"}
+        </button>
+      </form>
     </div>
   );
 }
@@ -233,6 +312,14 @@ React.useEffect(() => {
           <button className="w-full bg-red-900 text-white rounded px-3 py-2 hover:bg-red-800">
             Sign In
           </button>
+          <button
+            type="button"
+            onClick={sendResetEmail}
+            disabled={sending}
+            className="w-full mt-2 border rounded px-3 py-2 hover:bg-neutral-100"
+          >
+            {sending ? "Sending link…" : "Forgot password?"}
+          </button>          
         </form>
       </div>
     );
