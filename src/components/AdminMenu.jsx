@@ -21,6 +21,42 @@ export default function AdminMenu() {
   const undoIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="size-6" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/><path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/></svg>
   const redoIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="size-6" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/><path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/></svg>
 
+// at the top of AdminMenu
+const [authReady, setAuthReady] = React.useState(false);
+
+React.useEffect(() => {
+  (async () => {
+    try {
+      const url = new URL(window.location.href);
+
+      // Case 1: links that use `?code=...` (GoTrue v2)
+      const code = url.searchParams.get("code");
+      if (code) {
+        await supabase.auth.exchangeCodeForSession(code);
+      }
+
+      // Case 2: links that use `?token_hash=...&type=invite|signup|recovery`
+      const tokenHash = url.searchParams.get("token_hash");
+      const type = url.searchParams.get("type");
+      if (tokenHash && type) {
+        await supabase.auth.verifyOtp({ token_hash: tokenHash, type });
+      }
+
+      // Get (or confirm) current session
+      const { data: { session } } = await supabase.auth.getSession();
+      setSession(session ?? null);
+
+      // (optional) clean the URL
+      window.history.replaceState({}, document.title, url.origin + url.pathname);
+    } finally {
+      setAuthReady(true);
+    }
+  })();
+
+  const { data: sub } = supabase.auth.onAuthStateChange((_evt, s) => setSession(s));
+  return () => sub.subscription.unsubscribe();
+}, []);
+
 // --- History for jsonText ---
 const MAX_HISTORY = 100;
 const historyRef = React.useRef(["[]"]); // stores stringified JSONs
@@ -163,6 +199,14 @@ React.useEffect(() => {
     if (error) setError(error.message);
     setSaving(false);
   }
+
+  if (!authReady) {
+  return (
+    <div className="min-h-screen grid place-items-center bg-neutral-50 p-6">
+      <p className="text-sm text-neutral-600">Checking your link…</p>
+    </div>
+  );
+}
 
   if (!session) {
     return (
