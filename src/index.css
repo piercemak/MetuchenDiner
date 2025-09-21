@@ -40,6 +40,12 @@ display: none;
   border-radius: 6px;
 }
 
+/* MOBILE SCROLLBAR */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }  
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } 
+}
+
 
   
 /* FONTS */

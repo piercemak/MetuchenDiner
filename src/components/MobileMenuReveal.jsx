@@ -171,13 +171,13 @@ const [isHover, setIsHover] = React.useState(false);
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "-100%", opacity: 0, transition:{ delay: 0.2 } }}
             transition={{ stiffness: 220, damping: 24, delay: 0.4 }}
-            className={`fixed left-0 top-0 z-30 h-[80%] w-full  backdrop-blur border-r border-black/10 shadow-xl ${slideColor}`}
+            className={`fixed left-0 top-0 z-30 h-[100%] w-full  backdrop-blur border-r border-black/10 shadow-xl ${slideColor}`}
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
           >
             {/* Panel content */}
-            <div className="h-[100%] flex items-center py-10">
+            <div className="h-dvh flex items-center py-10">
               <div className={`h-[90%] bg-black/20 w-[1px] ml-16 ${lineColor}`} />
               <div className="h-[90%] flex flex-col ml-4 items-start outfit-font text-[44px] font-extralight group">
                 {(items.length ? items : ["Menu", "Order Now", "Contact Us"]).map((label, idx) => {
