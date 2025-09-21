@@ -85,7 +85,7 @@ async function sendResetEmail() {
   else alert("Reset link sent. Check the inbox for that email.");
 }
 
-async function setNewPassword(e) {
+async function handlesetNewPassword(e) {
   e.preventDefault();
   setError("");
   if (newPassword !== confirmPassword) {
@@ -260,7 +260,7 @@ React.useEffect(() => {
 if (showReset) {
   return (
     <div className="min-h-screen grid place-items-center bg-neutral-50 p-6">
-      <form onSubmit={setNewPassword} className="w-full max-w-sm bg-white rounded-xl shadow p-6 space-y-4">
+      <form onSubmit={handlesetNewPassword} className="w-full max-w-sm bg-white rounded-xl shadow p-6 space-y-4">
         <h1 className="text-xl font-semibold">Set a new password</h1>
         {error && <p className="text-red-600 text-sm">{error}</p>}
         <input
@@ -286,6 +286,17 @@ if (showReset) {
     </div>
   );
 }
+React.useEffect(() => {
+  const p = new URLSearchParams(window.location.search);
+  const type = p.get("type");
+  const code = p.get("code") || p.get("oob_code");
+  if (type === "recovery" && code) {
+    supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
+      if (error) setError(error.message);
+      else setShowReset(true);
+    });
+  }
+}, []);
 
   if (!session) {
     return (
