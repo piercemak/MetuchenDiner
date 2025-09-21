@@ -1,0 +1,141 @@
+[
+  {
+    "category": "CHEESECAKE",
+    "items": [
+      {
+        "name": "Creamy Cheesecake",
+        "price": "6.50"
+      },
+      {
+        "name": "Chocolate Cheesecake",
+        "price": "7.50"
+      },   
+      {
+        "name": "Strawberry Cheesecake",
+        "price": "7.50"
+      }  
+    ]
+  }, 
+  {
+    "category": "PIES",
+    "items": [
+      {
+        "name": "Assorted Fruit Pies",
+        "price": "4.95",
+        "extra": "Apple, Cherry or Blueberry"
+      },
+      {
+        "name": "Coconut Custard Pie",
+        "price": "4.95",
+        "extra": "Ala Mode with Ice Cream & Whipped Cream +2.00"
+      }, 
+      {
+        "name": "Lemon Meringue Pie",
+        "price": "4.95"
+      }  
+    ]
+  }, 
+  {
+    "category": "CAKE",
+    "items": [
+      {
+        "name": "Carrot Cake",
+        "price": "5.95"
+      },
+      {
+        "name": "Chocolate Fudge Cake",
+        "price": "5.95"
+      },
+      {
+        "name": "Seven Layer Cake",
+        "price": "5.95"
+      },
+      {
+        "name": "Oreo Chocolate Cake",
+        "price": "5.95"
+      }, 
+      {
+        "name": "Assorted Layer Cake",
+        "price": "5.95"
+      }
+    ]
+  }, 
+  {
+    "category": "PUDDINGS",
+    "items": [
+      {
+        "name": "Rice Pudding",
+        "price": "3.95"
+      },
+      {
+        "name": "Chocolate Pudding",
+        "price": "3.95"
+      },
+      {
+        "name": "Tapioca Pudding",
+        "price": "3.95"
+      },
+      {
+        "name": "Bread Pudding",
+        "price": "3.95"
+      },
+      {
+        "name": "Jello",
+        "price": "3.95",
+        "extra": "with Whipped Cream"
+      }      
+
+    ]
+  },
+  {
+    "category": "COUNTER PASTRIES",
+    "items": [
+      {
+        "name": "Jumbo Chocolate Chip Cookies",
+        "price": "3.95"
+      },
+      {
+        "name": "Black & White Cookies",
+        "price": "3.95"
+      },
+      {
+        "name": "Danish Pastries",
+        "price": "3.95"
+      },
+      {
+        "name": "Apple Turnover",
+        "price": "3.95"
+      }   
+    ]
+  },
+  {
+    "category": "FOUNTAIN DELIGHTS",
+    "items": [
+      {
+        "name": "Ice Cream",
+        "price": "4.95",
+        "extra": "Two Scoops, Assorted Flavors"
+      },       
+      {
+        "name": "Plain Sundae",
+        "price": "5.95"
+      },
+      {
+        "name": "Fruit & Nut Sundae",
+        "price": "6.95"
+      }, 
+      {
+        "name": "Milk Shake",
+        "price": "5.95",
+        "extra": "Extra Thick +6.00"
+      },
+      {
+        "name": "Ice Cream Soda",
+        "price": "5.95",
+        "extra": "with Whipped Cream"
+      }                                                             
+    ]
+  }                 
+]
+
+

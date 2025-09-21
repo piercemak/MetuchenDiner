@@ -39,7 +39,7 @@ const sectionVariants = {
     <div className='relative min-h-dvh w-dvw bg-white grid place-items-center'>
         <div className='flex flex-col items-center'>
 
-            <div className='grid grid-cols-2 gap-5 gap-x-10 px-4 justify-items-center'>
+            <div className='grid grid-cols-2 gap-5 gap-x-10 px-4 justify-items-center pb-4'>
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"

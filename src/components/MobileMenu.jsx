@@ -14,11 +14,7 @@ import MobileItalianFavs from "./mobile-components/MobileItalianFavs";
 import MobileSteaksChopsRibs from "./mobile-components/MobileSteaksChopsRibs";
 import MobileSeniorSpecials from "./mobile-components/MobileSeniorSpecials";
 
-import breakfastmenuData from "./menudata/breakfastmenuData";
-import lunchmenuData from "./menudata/lunchmenuData";
-import dinnermenuData from "./menudata/dinnermenuData";
-import kidsmenuData from "./menudata/kidsmenuData";
-import dessertmenuData from "./menudata/dessertmenuData"
+import { supabase } from "../supabaseClient";
 
 
 {/* Icons */}
@@ -37,15 +33,7 @@ const foodCategoryVariants = {
   }
 };
 
-{/* Menu Data */}
-const MENUS = {
-  breakfast: breakfastmenuData,
-  lunch: lunchmenuData,
-  dinner: dinnermenuData,
-  kids: kidsmenuData,
-  dessert: dessertmenuData,
-};
-
+{/* Menu Images */}
 const MENU_IMAGES = {
   breakfast: "images/DinerMedia/breakfast/metuchendiner_frenchtoast2.jpg",
   lunch: "images/DinerMedia/entree/metuchendiner_cubano2.jpg",
@@ -96,20 +84,52 @@ const MobileMenu = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const filterScopeRef = useFilterMenuAnimation(filterOpen);
 
-  const [menuKey, setMenuKey] = useState("breakfast");
-  const menuData = MENUS[menuKey];
+const [menuKey, setMenuKey] = useState("breakfast");
+const [menuData, setMenuData] = useState([]);
+const [loading, setLoading] = useState(true);
+const [err, setErr] = useState(null);
+
+// fetch the JSON for the selected menu
+useEffect(() => {
+  let active = true;
+  setLoading(true);
+  setErr(null);
+  supabase
+    .from("menus")
+    .select("data")
+    .eq("key", menuKey)
+    .single()
+    .then(({ data, error }) => {
+      if (!active) return;
+      if (error) setErr(error.message);
+      else setMenuData(Array.isArray(data?.data) ? data.data : []);
+    })
+    .finally(() => active && setLoading(false));
+
+  return () => { active = false; };
+}, [menuKey]);
+useEffect(() => {
+  const channel = supabase
+    .channel("menus-realtime")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "menus", filter: `key=eq.${menuKey}` },
+      (payload) => setMenuData(Array.isArray(payload.new?.data) ? payload.new.data : [])
+    )
+    .subscribe();
+
+  return () => supabase.removeChannel(channel);
+}, [menuKey]);
 
 
   {/* Category Picker */}
-  const categoryRefs = useMemo(() => {
+    const categoryRefs = useMemo(() => {
     const refs = {};
-    menuData.forEach((section) => {
-      if (section.category) {
-        refs[section.category] = React.createRef();
-      }
+    (menuData || []).forEach((section) => {
+        if (section.category) refs[section.category] = React.createRef();
     });
     return refs;
-  }, [menuData]); 
+    }, [menuData]);
 
   {/* Tabs */}
   const tabBase = "text-[18px] 2xl:text-[28px] cursor-pointer transition-colors";

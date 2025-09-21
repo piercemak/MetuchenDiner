@@ -135,9 +135,9 @@ useEffect(() => {
   {/* Category Name Filter */}
   const [selectedCats, setSelectedCats] = useState(new Set());
     const categories = useMemo(() => {
-    const set = new Set((menuData || []).map(s => s.category).filter(Boolean));
+    const set = new Set(menuData.map(s => s.category).filter(Boolean));
     return Array.from(set);
-    }, [menuData]);
+  }, [menuData]);
   function toggleCategory(cat) {
     setSelectedCats(prev => {
         const copy = new Set(prev);
