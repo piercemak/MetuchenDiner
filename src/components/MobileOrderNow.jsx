@@ -48,7 +48,7 @@ const sectionVariants = {
                 <motion.div variants={sectionVariants} className="w-[80%] h-[1px] bg-red-900/90" ></motion.div>
             </motion.div>
             
-            <div className='grid grid-cols-2 gap-4 w-full px-5 max-w-screen-sm'>
+            <div className='grid grid-cols-2 gap-5 w-full px-4 justify-items-center'>
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
@@ -59,35 +59,35 @@ const sectionVariants = {
                         variants={logoVariants} 
                         whileTap={{ scale: 0.95, transition: { type: "spring", stiffness: 700, damping: 10 } }}                          
                         src="images/logos/DoordashLogo.svg" 
-                        className='w-full aspect-square rounded-2xl object-cover shadow-lg' 
+                        className='w-[clamp(120px,42vw,160px)] aspect-square rounded-2xl object-cover shadow-lg' 
                         onClick={() => window.open("https://www.doordash.com/store/metuchen-diner-metuchen-1510711/?utm_campaign=gpa&pickup=true&rwg_token=ACgRB3fHkq7ayqkvkf1zU-d4p0xtVn99VN4u1xCKZrZZ70pMO-W0z7_9Vac0HzkDqjEBnpEVGce3uTs0J0dGnWtliBOQcOXRiw%3D%3D", "_self")}
                     />
                     <motion.img 
                         variants={logoVariants}
                         whileTap={{ scale: 0.95, transition: { type: "spring", stiffness: 700, damping: 10 } }}                           
                         src="images/logos/UberEatsLogo2.svg" 
-                        className='w-full aspect-square rounded-2xl object-cover shadow-lg' 
+                        className='w-[clamp(120px,42vw,160px)] aspect-square rounded-2xl object-cover shadow-lg' 
                         onClick={() => window.open("https://www.ubereats.com/store/metuchen-diner/2zx6gLH7UoG_6U6Zp7Bwfg?diningMode=PICKUP&utm_campaign=CM2508147-search-free-nonbrand-google-pas_e_all_acq_Global&utm_medium=search-free-nonbrand&utm_source=google-pas", "_self")}                        
                     />
                     <motion.img 
                         variants={logoVariants} 
                         whileTap={{ scale: 0.95, transition: { type: "spring", stiffness: 700, damping: 10 } }}                          
                         src="images/logos/GrubHubLogo.svg" 
-                        className='w-full aspect-square rounded-2xl object-cover shadow-lg'
+                        className='w-[clamp(120px,42vw,160px)] aspect-square rounded-2xl object-cover shadow-lg'
                         onClick={() => window.open("https://www.grubhub.com/restaurant/metuchen-diner-338-lake-ave-metuchen/3054935?utm_source=google&utm_medium=organic&utm_campaign=place-action-link&pickup=true&rwg_token=ACgRB3e0YScxWzM9scTbSxmJepOkwYpws_p0Suf39CH6PyP1Hdqq6qCJQCEcv6MBLHfuSYPke-7oCB7mE-QC_bGFb1xzyjPbqg%3D%3D", "_self")}                         
                     />
                     <motion.img 
                         variants={logoVariants} 
                         whileTap={{ scale: 0.95, transition: { type: "spring", stiffness: 700, damping: 10 } }}                          
                         src="images/logos/PostmatesLogo.svg"
-                        className='w-full aspect-square rounded-2xl object-cover shadow-lg' 
+                        className='w-[clamp(120px,42vw,160px)] aspect-square rounded-2xl object-cover shadow-lg' 
                         onClick={() => window.open("https://www.postmates.com/store/metuchen-diner/2zx6gLH7UoG_6U6Zp7Bwfg?diningMode=PICKUP&utm_campaign=CM2508147-search-free-nonbrand-google-pas_e_all_acq_Global&utm_medium=search-free-nonbrand&utm_source=google-pas", "_self")}  
                     />
                     <motion.img 
                         variants={logoVariants}
                         whileTap={{ scale: 0.95, transition: { type: "spring", stiffness: 700, damping: 10 } }}                          
                         src="images/logos/SeamlessLogo.svg" 
-                        className='w-full aspect-square rounded-2xl object-cover shadow-lg' 
+                        className='w-[clamp(120px,42vw,160px)] aspect-square rounded-2xl object-cover shadow-lg' 
                         onClick={() => window.open("https://www.seamless.com/menu/metuchen-diner-338-lake-ave-metuchen/3054935?utm_source=google&utm_medium=organic&utm_campaign=place-action-link&pickup=true&rwg_token=ACgRB3caLOglv6HUzZoN_tasIlTj0clErfHiCxZcTQxTEPhG4RjCJN9YjpjY8VyH0fb8_gbjEtjRuGgDUGNvDMVFdyxNDI5SRg%3D%3D", "_self")}  
                     />
                     <motion.img 
@@ -95,7 +95,7 @@ const sectionVariants = {
                         whileHover={{ scale: 1.05, boxShadow: "0 4px 20px #000000",}}
                         whileTap={{ scale: 0.95, transition: { type: "spring", stiffness: 700, damping: 10 } }}                      
                         src="images/logos/OnlineOrderingLogo.svg" 
-                        className='w-full aspect-square rounded-2xl object-cover shadow-lg' 
+                        className='w-[clamp(120px,42vw,160px)] aspect-square rounded-2xl object-cover shadow-lg' 
                         onClick={() => window.open("https://order.online/store/-1510711/?pickup=true&hideModal=true&utm_source=gfo&rwg_token=ACgRB3fTdz0izZOR1tPs4gZwVwk9PfEgnn-4yddsltba8HI8fTt6EQ90MxfWV0K8YJoOfzLxqJ5bVWG4ZSJO1lQoRLd4OE-nCA%3D%3D", "_self")}  
                     />
                 </motion.div>               
