@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MobileHome from './components/MobileHome.jsx';
 import Home from './components/Home.jsx';
+import AdminMenu from './components/AdminMenu.jsx';
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
@@ -29,6 +30,11 @@ function App() {
         <Route
           path="/home"
           element={isMobile ? <MobileHome /> : <Home />}
+        />
+
+        <Route
+          path="/admin"
+          element={<AdminMenu />}
         />
       </Routes>     
       </BrowserRouter>

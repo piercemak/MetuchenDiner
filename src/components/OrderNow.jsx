@@ -111,14 +111,15 @@ const sectionVariants = {
             </div>
             <div className="absolute w-[60%] bottom-2 left-2 flex flex-row justify-between items-center outfit-font text-black/60 text-[14px] 2xl:text-[18px]">
                 <span>© 2025 Metuchen Diner • All rights reserved • Site by Piercemakombe.com</span>
-                    <motion.span
-                        className="cursor-pointer 2xl:left-[250px] 2xl:relative"
-                        whileHover={{ scale: 1.1, color: "#8a0194" }}
-                        whileTap={{ scale: 0.95, transition: { type: "spring", stiffness: 700, damping: 10 } }}   
-                        onClick={() => window.open("https://www.instagram.com/metuchen_diner", "_self")}                        
-                    >
-                        {instagramLogo}
-                    </motion.span>
+                <div className="absolute bg-red-900/90 w-80 h-[1%]"></div>
+                <motion.span
+                    className="cursor-pointer 2xl:left-[250px] 2xl:relative"
+                    whileHover={{ scale: 1.1, color: "#8a0194" }}
+                    whileTap={{ scale: 0.95, transition: { type: "spring", stiffness: 700, damping: 10 } }}   
+                    onClick={() => window.open("https://www.instagram.com/metuchen_diner", "_self")}                        
+                >
+                    {instagramLogo}
+                </motion.span>
             </div>
         </div> 
     </div>

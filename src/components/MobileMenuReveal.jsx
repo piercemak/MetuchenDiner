@@ -185,7 +185,7 @@ const [isHover, setIsHover] = React.useState(false);
                   return (
                     <div
                       key={label}
-                      className="relative inline-flex items-center"
+                      className="relative  items-center"
                       ref={label === "Contact Us" ? contactRef : undefined}
                     >
                       <motion.span
@@ -212,7 +212,7 @@ const [isHover, setIsHover] = React.useState(false);
                       <AnimatePresence>
                         {label === "Contact Us" && contactOpen && (
                           <motion.div
-                            className="absolute top-75 -translate-y-1/2 z-50"
+                            className=" z-50"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
