@@ -23,36 +23,38 @@ export default function AdminMenu() {
 
 // at the top of AdminMenu
 const [authReady, setAuthReady] = React.useState(false);
+const [showReset, setShowReset] = React.useState(false);
 
 // handle invite / verification / magic-link callbacks
 React.useEffect(() => {
   let mounted = true;
-
   (async () => {
     try {
       const url = new URL(window.location.href);
 
-      // Format A (GoTrue v2 / PKCE):  ?code=XYZ
-      const code = url.searchParams.get("code");
+      // PKCE/Invite style
+      const code = url.searchParams.get("code") || url.searchParams.get("oob_code");
       if (code) {
-        await supabase.auth.exchangeCodeForSession(code);
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (error) throw error;
       }
 
-      // Format B (email invite / recovery / magic): ?token_hash=...&type=invite|recovery|magiclink|signup
+      // Email invite / recovery / magic link style
       const token_hash = url.searchParams.get("token_hash");
       const type = url.searchParams.get("type");
       if (token_hash && type) {
-        await supabase.auth.verifyOtp({ token_hash, type });
+        const { error } = await supabase.auth.verifyOtp({ token_hash, type });
+        if (error) throw error;
+       if (type === "recovery") setShowReset(true); // <-- show the set-password form
       }
 
-      // grab the session (if either path succeeded)
       const { data: { session } } = await supabase.auth.getSession();
       if (mounted) setSession(session ?? null);
 
-      // optional: clean query params
+      // clean the URL
       window.history.replaceState({}, document.title, url.origin + url.pathname);
     } catch (e) {
-      console.error(e);
+      setError(e.message);
     } finally {
       if (mounted) setAuthReady(true);
     }
@@ -65,9 +67,7 @@ React.useEffect(() => {
 
 
 
-
 // Password reset UI state
-const [showReset, setShowReset] = React.useState(false);
 const [sending, setSending] = React.useState(false);
 const [newPassword, setNewPassword] = React.useState("");
 const [confirmPassword, setConfirmPassword] = React.useState("");
@@ -286,17 +286,7 @@ if (showReset) {
     </div>
   );
 }
-React.useEffect(() => {
-  const p = new URLSearchParams(window.location.search);
-  const type = p.get("type");
-  const code = p.get("code") || p.get("oob_code");
-  if (type === "recovery" && code) {
-    supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
-      if (error) setError(error.message);
-      else setShowReset(true);
-    });
-  }
-}, []);
+
 
   if (!session) {
     return (
