@@ -36,8 +36,8 @@ const sectionVariants = {
 
 
   return (
-    <div className='w-dvw h-dvh bg-white'>
-        <div className='flex flex-col items-center pt-24'>
+    <div className='relative min-h-dvh w-dvw bg-white grid place-items-center'>
+        <div className='flex flex-col items-center'>
 
             <div className='grid grid-cols-2 gap-5 w-full px-4 justify-items-center'>
                 <motion.div
