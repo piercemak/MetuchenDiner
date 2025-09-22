@@ -115,7 +115,7 @@ const [open, setOpen] = useState(false);
 const [pageIndex, setPageIndex] = useState(() => {
    try {
     if (typeof window === "undefined") return 0; 
-    const saved = window.localStorage.getItem("home.pageIndex");
+    const saved = window.sessionStorage.getItem("home.pageIndex");
     const n = saved === null ? NaN : Number(saved);
     return Number.isFinite(n) ? n : 0;
   } catch {
@@ -127,11 +127,17 @@ const metuchenColor = pageIndex >= 1 ? "text-black/70 font-light" : "text-white"
 const dinerColor = pageIndex >= 1 ? "text-white font-light" : "text-red-900";
 
 {/* Mobile */}
-const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+const [isMobile, setIsMobile] = useState(false); // neutral on first render
 useEffect(() => {
-  const handleResize = () => setIsMobile(window.innerWidth <= 768);
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
+  const mq = window.matchMedia("(max-width: 768px)");
+  const update = () => setIsMobile(mq.matches);
+  update();                        // compute after mount (correct viewport)
+  mq.addEventListener?.("change", update);
+  window.addEventListener("orientationchange", update); // iOS tab/new orientation quirks
+  return () => {
+    mq.removeEventListener?.("change", update);
+    window.removeEventListener("orientationchange", update);
+  };
 }, []);
 
 {/* Variant Mounting */}
@@ -144,8 +150,8 @@ const trans = hasMountedRef.current
 
 {/* PageIndex Location */}
 useEffect(() => {
-  localStorage.setItem("home.pageIndex", String(pageIndex));
-}, [pageIndex]);  
+  try { window.sessionStorage.setItem("home.pageIndex", String(pageIndex)); } catch {}
+}, [pageIndex]);
 
   return (
     <div className='w-full h-dvh bg-black '>
