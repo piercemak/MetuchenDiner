@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Menu from './Menu';
 import Default from './Default';
 import MobileOrderNow from './MobileOrderNow';
+import Portal from './Portal';
 
 {/* Triangle */}
 const righttriangle = (
@@ -148,82 +149,83 @@ useEffect(() => {
 
   return (
     <div className='w-full h-dvh bg-black '>
-      <div className='fixed z-20'>
-        <MobileMenuReveal 
-            open={open} 
-            onOpenChange={setOpen}
-            items={pages.map(p => p.label)}
-            pageIndex={pageIndex}
-            onSelect={(idx) => {            
-            setPageIndex(idx);
-            setOpen(false);               
-            }}            
+    <Portal>
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <MobileMenuReveal
+          open={open}
+          onOpenChange={setOpen}
+          items={pages.map(p => p.label)}
+          pageIndex={pageIndex}
+          onSelect={(idx) => { setPageIndex(idx); setOpen(false); }}
         />
       </div>
+    </Portal>
  
       {/* Bottom-right group */}
-      <AnimatePresence initial={false}>
-        {!open && (
-          <motion.div
-            key="cornerBrand"
-            className="fixed bottom-0 right-0 z-20 pointer-events-none"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.2, delay: 0.4 }}
-          >
+      <Portal>
+        <AnimatePresence initial={false}>
+          {!open && (
             <motion.div
-              initial={false}
-              animate={{ paddingRight: 8, paddingBottom: 8 }}
-              transition={trans}
-              className="relative text-right"
+              key="cornerBrand"
+              className="fixed bottom-0 right-0 z-20 pointer-events-none"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.2, delay: 0.4 }}
             >
-              {/* Triangle */}
               <motion.div
-                className="absolute bottom-0 right-0"
                 initial={false}
-                animate={{
-                  width: pageIndex >= 1 ? 300 : 400,
-                  height: pageIndex >= 1 ? 300 : 400,
-                  color: pageIndex >= 1 ? "#292222" : "#ffffff",
-                }}
+                animate={{ paddingRight: 8, paddingBottom: 8 }}
                 transition={trans}
+                className="relative text-right"
               >
-                {React.cloneElement(righttriangle, { className: "w-full h-full fill-current" })}
+                {/* Triangle */}
+                <motion.div
+                  className="absolute bottom-0 right-0"
+                  initial={false}
+                  animate={{
+                    width: pageIndex >= 1 ? 300 : 400,
+                    height: pageIndex >= 1 ? 300 : 400,
+                    color: pageIndex >= 1 ? "#292222" : "#ffffff",
+                  }}
+                  transition={trans}
+                >
+                  {React.cloneElement(righttriangle, { className: "w-full h-full fill-current" })}
+                </motion.div>
+
+                {/* Text */}
+                <motion.span
+                  variants={metuchenVariants}
+                  initial={false}
+                  className="block outfit-font -skew-y-16"
+                  animate={{
+                    fontSize: pageIndex >= 1 ? "34px" : "48px", // px
+                    color: pageIndex >= 1 ? "rgba(0,0,0,0.7)" : "#ffffff",
+                    fontWeight: pageIndex >= 1 ? 300 : 400,
+                  }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                >
+                  METUCHEN
+                </motion.span>
+
+                <motion.span
+                  variants={dinerVariants}
+                  initial={false}
+                  className="block outfit-font -skew-y-16"
+                  animate={{
+                    fontSize: pageIndex >= 1 ? "18px" : "26px",
+                    color: pageIndex >=1 ? "#ffffff" : "#7f1d1d",
+                    fontWeight: pageIndex >= 1 ? 300 : 400,
+                  }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                >
+                  DINER
+                </motion.span>
               </motion.div>
-
-              {/* Text */}
-              <motion.span
-                variants={metuchenVariants}
-                initial={false}
-                className="block outfit-font -skew-y-16"
-                animate={{
-                  fontSize: pageIndex >= 1 ? "34px" : "48px", // px
-                  color: pageIndex >= 1 ? "rgba(0,0,0,0.7)" : "#ffffff",
-                  fontWeight: pageIndex >= 1 ? 300 : 400,
-                }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-              >
-                METUCHEN
-              </motion.span>
-
-              <motion.span
-                variants={dinerVariants}
-                initial={false}
-                className="block outfit-font -skew-y-16"
-                animate={{
-                  fontSize: pageIndex >= 1 ? "18px" : "26px",
-                  color: pageIndex >=1 ? "#ffffff" : "#7f1d1d",
-                  fontWeight: pageIndex >= 1 ? 300 : 400,
-                }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-              >
-                DINER
-              </motion.span>
-            </motion.div>
-        </motion.div>
-        )}
-      </AnimatePresence>
+          </motion.div>
+          )}
+        </AnimatePresence>
+      </Portal>
 
         {/* Pages */}
         <div className="z-0 overflow-hidden">
