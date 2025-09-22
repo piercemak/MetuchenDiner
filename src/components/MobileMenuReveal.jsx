@@ -177,7 +177,7 @@ const [isHover, setIsHover] = React.useState(false);
             aria-label="Menu"
           >
             {/* Panel content */}
-            <div className="h-dvh flex items-center py-10">
+            <div className="h-[100%] flex items-center py-10">
               <div className={`h-[90%] bg-black/20 w-[1px] ml-16 ${lineColor}`} />
               <div className="h-[90%] flex flex-col ml-4 items-start outfit-font text-[44px] font-extralight group">
                 {(items.length ? items : ["Menu", "Order Now", "Contact Us"]).map((label, idx) => {

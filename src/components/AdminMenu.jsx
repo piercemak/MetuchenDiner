@@ -24,6 +24,7 @@ export default function AdminMenu() {
 // at the top of AdminMenu
 const [authReady, setAuthReady] = React.useState(false);
 const [showReset, setShowReset] = React.useState(false);
+const [saveOK, setSaveOK] = React.useState(false);
 
 // handle invite / verification / magic-link callbacks
 React.useEffect(() => {
@@ -253,8 +254,12 @@ React.useEffect(() => {
       .from("menus")
       .upsert({ key: menuKey, data: parsed, updated_at: new Date().toISOString() });
 
-    if (error) setError(error.message);
-    setSaving(false);
+      if (error) {
+        setError(error.message);
+      } else {
+        setSaveOK(true);        
+      }
+      setSaving(false);
   }
 
 if (showReset) {
@@ -408,9 +413,43 @@ if (showReset) {
           </AnimatePresence>
         </div>
       </div>
+      <SaveToast open={saveOK} onClose={() => setSaveOK(false)} />
     </div>
   );
 }
+
+
+
+function SaveToast({ open, onClose, message = "Changes saved" }) {
+  React.useEffect(() => {
+    if (!open) return;
+    const id = setTimeout(onClose, 2200);
+    return () => clearTimeout(id);
+  }, [open, onClose]);
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ y: 16, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 16, opacity: 0 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="fixed bottom-6 right-6 z-50 rounded-lg bg-green-600 text-white shadow-lg px-4 py-2"
+          role="status" aria-live="polite"
+        >
+          <div className="flex items-center gap-2">
+            <svg className="size-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.59 7.59a1 1 0 01-1.42 0L3.296 10.9a1 1 0 111.414-1.414l3.28 3.28 6.88-6.88a1 1 0 011.834.404z" clipRule="evenodd"/>
+            </svg>
+            <span className="font-medium">{message}</span>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 
 
 function PreviewSkeleton() {
